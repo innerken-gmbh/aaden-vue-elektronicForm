@@ -5,26 +5,57 @@
       <ul>(Zur Kontaktnachverfolgung im Sinne der SARS-CoV-2-Infektionsschutzverordnung)</ul>
     </div>
     <div>
-      <ul>Name:</ul>
-      <input v-model="formMess.name" placeholder="Bitte Name eingeben.">
+      <v-form>
+        <v-container>
+          <v-row>
+            <v-col cols="12" sm="6">
+              <v-text-field :disabled="dataChecked" v-model="formMess.name"
+                            placeholder="Bitte Name eingeben."
+                            label="Name:"
+                            clearable
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-text-field :disabled="dataChecked" v-model="formMess.vorname"
+                            placeholder="Bitte Vorname eingeben."
+                            label="Vorname:"
+                            clearable
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12">
+              <v-text-field :disabled="dataChecked" v-model="formMess.anschrift"
+                            placeholder="Postleitzahl, Stadt, Straße"
+                            label="Anschrift:"
+                            clearable
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12">
+              <v-text-field :disabled="dataChecked" v-model="formMess.tel"
+                            placeholder="Bitte Telefonnummer eingeben."
+                            label="Telefonnummer"
+                            clearable
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12">
+              <v-text-field :disabled="dataChecked" v-model="formMess.zeit"
+                            placeholder="TT.MM.YYYY"
+                            label="Zeitraum des Aufenthalts/ggf. Tischnummer:"
+                            clearable
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-form>
     </div>
-    <div>
-      <ul>Vorname:</ul>
-      <input v-model="formMess.vorname" placeholder="Bitte Vorname eingeben.">
-    </div>
-    <div>
-      <ul>Vollständige Anschrift:</ul>
-      <input v-model="formMess.anschrift" placeholder="Postleitzahl, Stadt">
-    </div>
-    <div>
-      <ul>Telefonnummer:</ul>
-      <input v-model="formMess.tel" placeholder="Bitte Telefonnummer eingeben.">
-    </div>
-    <div>
-      <ul>Zeitraum des Aufenthalts / ggf. Platz- oder Tischnummer:</ul>
-      <input v-model="formMess.zeit" placeholder="TT.MM.YYYY">
-    </div>
-    <button style="margin: 30px 0px 0px" @click="inspect">submit</button>
+    <v-btn depressed outlined block color="primary" @click="inspect" v-if="!dataChecked"
+    >submit</v-btn>
+    <p style="font-size: 0.75rem; margin: 10px 0 0; color: gray;
+    border-left-style: solid; border-left-color: lightgray; border-left-width:10px"
+    v-if="!dataChecked">
+      Diese Daten sind ausschließlich für die Zwecke des Infektionsschutzes aufzubewahren,
+      dürfen zu keinem anderen Zwecke verwendet werden und sind spätesten einen Monat
+      nach dem letzten Kontakt zu löschen bzw. zu vernichten.
+    </p>
   </div>
 </template>
 
@@ -61,35 +92,38 @@ export default {
           inspect: "",
           msg: 'Zeit',
         }
-      ]
+      ],
+      dataChecked: false
     }
   },
   props: {
     msg: String,
   },
   methods:{
-    have_empty(arr) {
-      for ( let key in arr) {
+    have_empty: function (arr) {
+      for (let key in arr) {
         console.log(arr[key].inspect)
-        if(arr[key].inspect && arr[key].reg){
+        if (arr[key].inspect && arr[key].reg) {
           let reg = new RegExp(arr[key].reg)
           const red_end = reg.test(arr[key].inspect);
-          if( !red_end ){
+          if (!red_end) {
             alert('Bitte korrekt ' + arr[key].msg + ' eingeben.')
             return false
           }
-        }else if(!arr[key].inspect){
+        } else if (!arr[key].inspect) {
           alert('Bitte ' + arr[key].msg + ' eingeben.')
           return false
         }
       }
       alert('Vielen Dank für Ihren Unterstüzung!')
+      this.dataChecked = true
       return true
     },
     inspect(){
       this.assignData();
       const end = this.have_empty(this.checkdata);
-      if(!end) return console.log('submit');
+      if(!end) return
+        console.log('submit')
     },
     assignData(){
       const arrForm = [];
@@ -97,10 +131,9 @@ export default {
         arrForm.push(key);
       }
       for(let i = 0;i<this.checkdata.length;i++){
-        // const key = arrForm[i];
         this.checkdata[i].inspect = this.formMess[arrForm[i]];
       }
-    }
+    },
   }
 }
 </script>
@@ -116,7 +149,7 @@ h3 {
 }
 ul {
   list-style-type: none;
-  padding: 0;
+  margin: 10px 0 0;
 }
 li {
   display: inline-block;
@@ -124,15 +157,5 @@ li {
 }
 a {
   color: #42b983;
-}
-input{
-  border-width: 1px;
-  margin: auto;
-  max-width: 700px;
-  height: 30px;
-}
-button{
-  height: 30px;
-  font-size: 15px;
 }
 </style>
