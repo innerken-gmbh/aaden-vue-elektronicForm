@@ -1,5 +1,5 @@
 <template>
-  <div class="form" style="margin: auto;background: whitesmoke ;padding: 24px;max-width: 700px; ">
+  <div class="form" style="margin: auto;background: whitesmoke;padding: 24px ;max-width: 700px; ">
     <div>
       <h3>Erfassung Ihrer Kontaktdaten</h3>
       <ul>(Zur Kontaktnachverfolgung im Sinne der SARS-CoV-2-Infektionsschutzverordnung)</ul>
@@ -9,37 +9,37 @@
         <v-container>
           <v-row>
             <v-col cols="12" sm="6">
-              <v-text-field :disabled="dataChecked" v-model="formMess.name"
+              <v-text-field :disabled="dataChecked" v-model="formMess.firstName"
                             placeholder="Bitte Name eingeben."
                             label="Name:"
                             clearable
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-text-field :disabled="dataChecked" v-model="formMess.vorname"
+              <v-text-field :disabled="dataChecked" v-model="formMess.lastName"
                             placeholder="Bitte Vorname eingeben."
                             label="Vorname:"
                             clearable
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="12">
-              <v-text-field :disabled="dataChecked" v-model="formMess.anschrift"
+              <v-text-field :disabled="dataChecked" v-model="formMess.address"
                             placeholder="Postleitzahl, Stadt, Straße"
                             label="Anschrift:"
                             clearable
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="12">
-              <v-text-field :disabled="dataChecked" v-model="formMess.tel"
+              <v-text-field :disabled="dataChecked" v-model="formMess.phone"
                             placeholder="Bitte Telefonnummer eingeben."
                             label="Telefonnummer"
                             clearable
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="12">
-              <v-text-field :disabled="dataChecked" v-model="formMess.zeit"
-                            placeholder="TT.MM.YYYY"
-                            label="Zeitraum des Aufenthalts/ggf. Tischnummer:"
+              <v-text-field :disabled="dataChecked" v-model="formMess.eatTime"
+                            placeholder="Stunde:Minute"
+                            label="Zeitraum des Aufenthalts"
                             clearable
               ></v-text-field>
             </v-col>
@@ -60,16 +60,19 @@
 </template>
 
 <script>
+import hillo from "hillo";
+
 export default {
   name: 'HelloWorld',
   data(){
     return{
       formMess:{
-        name:'',
-        vorname: '',
-        anschrift: '',
-        tel: '',
-        zeit: '',
+        firstName: '',
+        lastName:'',
+        address: '',
+        phone: '',
+        eatTime: '',
+        // exactTime: ' ',
       },
       checkdata:[
         {
@@ -117,6 +120,9 @@ export default {
       }
       alert('Vielen Dank für Ihren Unterstüzung!')
       this.dataChecked = true
+      this.getNewDate();
+      console.log(this.formMess,'formMass')
+      hillo.post('Route.php?op=coronaAdd',this.formMess)
       return true
     },
     inspect(){
@@ -134,6 +140,24 @@ export default {
         this.checkdata[i].inspect = this.formMess[arrForm[i]];
       }
     },
+    getNewDate(){
+      var date = new Date();
+      var seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      this.formMess.eatTime = year + seperator1 + month + seperator1 + strDate + " " + this.formMess.eatTime
+      // return year + seperator1 + month + seperator1 + strDate + this.exactTime;
+    },
+  },
+  mounted() {
+    document.body.style.backgroundColor= "whitesmoke"
   }
 }
 </script>
