@@ -1,6 +1,9 @@
 <template>
   <div class="form" style="margin: auto;background: whitesmoke;padding: 24px ;max-width: 700px; ">
     <div>
+      <img :src="pic.src" style="max-width: 100%; height: auto;">
+    </div>
+    <div>
       <h3>Erfassung Ihrer Kontaktdaten</h3>
       <ul>(Zur Kontaktnachverfolgung im Sinne der SARS-CoV-2-Infektionsschutzverordnung)</ul>
     </div>
@@ -38,7 +41,7 @@
             </v-col>
             <v-col cols="12" sm="12">
               <v-text-field :disabled="dataChecked" v-model="formMess.eatTime"
-                            placeholder="Stunde:Minute"
+                            placeholder="Stunde:Minute, wie 15:30"
                             label="Zeitraum des Aufenthalts"
                             clearable
               ></v-text-field>
@@ -61,6 +64,7 @@
 
 <script>
 import hillo from "hillo";
+import logo from '/src/assets/aadenLogo.png';
 
 export default {
   name: 'HelloWorld',
@@ -72,7 +76,6 @@ export default {
         address: '',
         phone: '',
         eatTime: '',
-        // exactTime: ' ',
       },
       checkdata:[
         {
@@ -94,8 +97,14 @@ export default {
         {
           inspect: "",
           msg: 'Zeit',
+          reg: '[0-9]{2}:[0-9]{2}',
+          msg2: "wie 15:30"
         }
       ],
+      pic:{
+        name: 'aadenLogo',
+        src: logo,
+      },
       dataChecked: false
     }
   },
@@ -110,7 +119,7 @@ export default {
           let reg = new RegExp(arr[key].reg)
           const red_end = reg.test(arr[key].inspect);
           if (!red_end) {
-            alert('Bitte korrekt ' + arr[key].msg + ' eingeben.')
+            alert('Bitte korrekt ' + arr[key].msg + ' eingeben.' + arr[key].msg2)
             return false
           }
         } else if (!arr[key].inspect) {
