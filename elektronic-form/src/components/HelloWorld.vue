@@ -1,13 +1,13 @@
 <template>
-  <div class="form" style="margin: auto;background: whitesmoke;padding: 24px ;max-width: 700px; ">
+  <div style="margin: auto;background: white;padding: 24px ;max-width: 700px; bottom: 0">
     <div>
       <img :src="pic.src" style="max-width: 100%; height: auto;">
     </div>
-    <div>
+    <div class="title" style="margin-bottom: 20px;">
       <h3>Erfassung Ihrer Kontaktdaten</h3>
       <ul>(Zur Kontaktnachverfolgung im Sinne der SARS-CoV-2-Infektionsschutzverordnung)</ul>
     </div>
-    <div>
+    <div class="form" style="background-color: whitesmoke;border-top-left-radius: 24px;border-top-right-radius: 24px;padding-bottom: 10px;max-width: 500px">
       <v-form>
         <v-container>
           <v-row>
@@ -49,16 +49,19 @@
           </v-row>
         </v-container>
       </v-form>
-    </div>
-    <v-btn depressed outlined block color="primary" @click="inspect" v-if="!dataChecked"
-    >submit</v-btn>
-    <p style="font-size: 0.75rem; margin: 10px 0 0; color: gray;
+      <div style="padding-right: 10px;padding-left: 10px">
+        <v-btn depressed outlined block color="primary" @click="inspect" v-if="!dataChecked"
+        >submit</v-btn>
+      </div>
+      <p style="font-size: 0.75rem; margin: 10px 0 0; color: gray;
     border-left-style: solid; border-left-color: lightgray; border-left-width:10px"
-    v-if="!dataChecked">
-      Diese Daten sind ausschließlich für die Zwecke des Infektionsschutzes aufzubewahren,
-      dürfen zu keinem anderen Zwecke verwendet werden und sind spätesten einen Monat
-      nach dem letzten Kontakt zu löschen bzw. zu vernichten.
-    </p>
+         v-if="!dataChecked">
+        Diese Daten sind ausschließlich für die Zwecke des Infektionsschutzes aufzubewahren,
+        dürfen zu keinem anderen Zwecke verwendet werden und sind spätesten einen Monat
+        nach dem letzten Kontakt zu löschen bzw. zu vernichten.
+      </p>
+    </div>
+    
   </div>
 </template>
 
@@ -166,7 +169,7 @@ export default {
     },
   },
   mounted() {
-    document.body.style.backgroundColor= "whitesmoke"
+    document.body.style.backgroundColor= "white"
   }
 }
 </script>
