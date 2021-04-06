@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: auto;background: white;padding: 24px ;max-width: 700px; bottom: 0">
+  <div style="margin: auto;background: white;padding: 24px ;max-width: 700px;">
     <div>
       <img :src="pic.src" style="max-width: 100%; height: auto;">
     </div>
@@ -7,7 +7,7 @@
       <h3>Erfassung Ihrer Kontaktdaten</h3>
       <ul>(Zur Kontaktnachverfolgung im Sinne der SARS-CoV-2-Infektionsschutzverordnung)</ul>
     </div>
-    <div class="form" style="background-color: whitesmoke;border-top-left-radius: 24px;border-top-right-radius: 24px;padding-bottom: 10px;max-width: 500px">
+    <div class="form" style="background-color: whitesmoke;border-top-left-radius: 24px;border-top-right-radius: 24px;padding-bottom: 10px;max-width: 650px; position: relative;bottom: 0">
       <v-form>
         <v-container>
           <v-row>
