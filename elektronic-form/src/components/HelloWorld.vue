@@ -75,7 +75,7 @@
           :multi-line="snackbarProps.multiLine"
           :timeout="snackbarProps.timeout"
           relative
-          color="primary"
+          color="gray"
           text
           rounded="pill"
       >{{alertMsg}}
